@@ -5,6 +5,8 @@ import org.jsoup.nodes.Document;
 
 class Main {
   public static void main(String[] args)  throws IOException {
+    
+    
     Sentiment rawText = new Sentiment();
 
     //Start text
@@ -13,8 +15,19 @@ class Main {
 
 
     //pull text from link using jsoup
-    Document doc = Jsoup.connect("https://www.metacritic.com/feature/reviews-for-the-sony-playstation-5-console-hardware").get();
+    Document doc = Jsoup.connect("https://www.dualshockers.com/ps5-pros-and-cons-launch-sony/").get();
+    
+    //https://www.denofgeek.com/games/ps5-review/#:~:text=PlayStation%205%20Specs&text=Taken%20on%20its%20own%20merits,the%20console's%20SSD%20and%20RAM.
+    
+    //https://www.pocket-lint.com/games/reviews/playstation/154419-ps5-review-playstation-5
 
+    //https://www.techradar.com/reviews/ps5
+
+    //https://www.metacritic.com/feature/reviews-for-the-sony-playstation-5-console-hardware
+    
+    //https://www.denofgeek.com/games/ps5-review/#:~:text=PlayStation%205%20Specs&text=Taken%20on%20its%20own%20merits,the%20console's%20SSD%20and%20RAM.
+
+    //https://www.dualshockers.com/ps5-pros-and-cons-launch-sony/
 
 
     
