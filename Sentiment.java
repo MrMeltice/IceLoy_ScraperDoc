@@ -19,6 +19,7 @@ public class Sentiment {
 
   
   //public method removing stop words
+  //Post removeStop method output: Clean text (Removed Blank Value, Num, Special Char, Stop-word) convert to array for comparison
   public void removeStop(String text){
 
     //[CODE BELOW REMOVE ALL SPECIAL&NUM CHAR and ADD ALL WORDS PULLED FROM WEBSITE TO ARRAYLIST]
@@ -29,27 +30,27 @@ public class Sentiment {
     //Take list of char and convert it into a string type
     String strList = new String(charArray);
  
+    //regex replace all characters that are not alphabets with space
     strList = strList.replaceAll("[^a-zA-Z]", " ");
     
     //Take string w/ no speacial character (except WhiteSpaces) and shove it into a string array using split() with WhiteSpaces as the delimiter
     String[] wordArray = strList.split(" ");
-    //[JAVA] the value of the local variable  wordList is not used
     
-    
-
     //For string l add every word in Array wordArray into the Arraylist wordList
     for (String l : wordArray) {
       wordAL.add(l.toLowerCase());
     }
 
-    //Remove blank string value until there is no more blank value to remove     
+    //Remove blank string value until there is no more blank value to remove
     while (wordAL.remove("")){
     }
 
     //CheckPoint* Iteration 1 complete = removed special characters between text and add words into Array, ready for comparison
 
-    //[CODE BELOW ADD ELEMENT TO ARRAYLIST INSERTED FROM STOP.TXT FILE]
-    
+    //-------------------------------------------------------------------//
+    // [CODE BELOW ADD ELEMENT TO ARRAYLIST INSERTED FROM STOP.TXT FILE] //
+    //-------------------------------------------------------------------//
+
     //initialize blank local string variable
     String stopText = "";
     
@@ -79,11 +80,13 @@ public class Sentiment {
     
     //CheckPoint* Iteration 2 complete = access txtfile and add it into array...  => compare with wordAL to remove stop words
     this.countStopAL = stopAL.size();
-    
-    //[CODE BELOW COMPARES ARRAYS WORDAL AND STOPAL AND REMOVE STOP WORD FROM THE WEBSITE ]
+
+    //--------------------------------------------------------------------------------------//
+    // [CODE BELOW COMPARES ARRAYS WORDAL AND STOPAL AND REMOVE STOP WORD FROM THE WEBSITE] //
+    //--------------------------------------------------------------------------------------//
 
     //Checkpoint* Iteration 3 complete = removed stop text from array => 
-    for (int b = wordAL.size()-1; b > 0; b--){
+    for (int b = wordAL.size() - 1; b > 0; b--){
       for(int c = 0; c < stopAL.size() - 1; c++){
         if(wordAL.get(b).equals(stopAL.get(c))){
           wordAL.remove(b);
@@ -91,15 +94,19 @@ public class Sentiment {
       }
     }
 
+    //set total amount of word for data analytic purposes
     this.countWordAL = wordAL.size();
   }
 
-
-
+  //Post Rating() method output: 
   public void Rating(){
     String posText = "";
     String negText = "";
     
+    //----- CONVERT FILE => ARRAY ----------------------------------------------------------//
+    // [CODE BELOW ADD ALL POS & NEG ELEMENT TO ARRAY INSERTED FROM POS.TXT & NEG.TXT FILE] //
+    //--------------------------------------------------------------------------------------//
+
     //Try pulling file from pos.txt
     try {
       //Access negativeword from pos.text using java.io.File
@@ -108,6 +115,7 @@ public class Sentiment {
       //New Scanner PosScanner
       Scanner myPosScan = new Scanner(posFile);
 
+      //If there is still an element in file from scanner, concatenate posText with word from file
       while(myPosScan.hasNextLine()) {
         posText += myPosScan.nextLine() + " ";
       }
@@ -123,10 +131,11 @@ public class Sentiment {
     try {
       //Access neg from neg.text using java.io.File
       File negFile = new File("neg.txt");
-      //New Scanner myScan
       
+      //New Scanner myNegScan
       Scanner myNegScan = new Scanner(negFile);
 
+      //If there is still an element in file from scanner, concatenate negText with word from file
       while(myNegScan.hasNextLine()) {
         negText += myNegScan.nextLine() + " ";
       }
@@ -137,13 +146,16 @@ public class Sentiment {
       System.out.println("Error Occurred at NegPrintError");
       neg.printStackTrace();
     }
-    
-    
-    String[] posArray = posText.split(",");
 
+    //----- CONVERT ARRAY => ARRAYLIST ---------------------------------------------------------//
+    // [CODE BELOW ADD ALL POS & NEG ELEMENT TO ARRAYLIST INSERTED FROM POS.TXT & NEG.TXT FILE] //
+    //------------------------------------------------------------------------------------------//
+    
+    //Split string by delimeter and add into array
+    String[] posArray = posText.split(",");
     String[] negArray = negText.split(",");
     
-    
+    //Conevert Array to Arraylist
     for (String pos : posArray) {
       posAL.add(pos.toLowerCase());
     } 
@@ -151,9 +163,15 @@ public class Sentiment {
       negAL.add(neg.toLowerCase());
     }
 
+    //Declare local variable
     int ratePositive = 0;
     int rateNegative = 0;
 
+    //----- INCREMENTING POS AND NEG -------------------------------------------------------------//
+    // [CODE BELOW RUNS THROUGH EVERY INSTANCE OF MATCHING ELEMENTS AND INCREMENT RELATED VALUES] //
+    //--------------------------------------------------------------------------------------------//
+
+    //Increment Positive for every match in the array
     for (int x = wordAL.size()-1; x > 0; x--){
       for(int y = 0; y < posAL.size() - 1; y++){
         if(wordAL.get(x).equals(posAL.get(y))){
@@ -162,7 +180,7 @@ public class Sentiment {
       }
     }
 
-    
+    //Increment Negative for every match in the array
     for (int x = wordAL.size()-1; x > 0; x--){
       for(int y = 0; y < posAL.size() - 1; y++){
         if(wordAL.get(x).equals(negAL.get(y))){
@@ -170,9 +188,31 @@ public class Sentiment {
         }
       }
     }
-    
+
+    //Set variable for main use
     this.negative = rateNegative;
     this.positive = ratePositive;
 
   }
+
+
+
+  public int getPositiveRate() {
+
+    
+
+
+    return positive;
+  }
+
+
+
+  public int getNegativeRate() {
+
+
+
+
+    return negative;
+  }
+
 }

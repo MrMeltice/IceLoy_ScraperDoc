@@ -14,6 +14,9 @@ class Main {
 
     //pull text from link using jsoup
     Document doc = Jsoup.connect("https://www.metacritic.com/feature/reviews-for-the-sony-playstation-5-console-hardware").get();
+
+
+
     
     //set said 'text' from Document doc to String variable
     String unprocessedText = doc.text();
@@ -21,29 +24,13 @@ class Main {
     //access a method from Clean to process the string
     rawText.removeStop(unprocessedText);
 
-    /*
-    for(String i : Sentiment.wordAL){
-      System.out.print(i +", ");
-    }
-    System.out.print("Total words : " + Sentiment.countWordAL);
-    */
-
-
+    //Count amount of positve and negative in the Clean text
     rawText.Rating();
 
-    System.out.println("Positive Sentiment: " + Sentiment.positive + "/" + Sentiment.countWordAL);
-    System.out.print("Negative Sentiment: " + Sentiment.negative + "/" + Sentiment.countWordAL);
+    System.out.println("Positive Sentiment: " + rawText.getPositiveRate() + "/" + Sentiment.countWordAL);
+    System.out.println("Negative Sentiment: " + Sentiment.negative + "/" + Sentiment.countWordAL);
 
-    System.out.println("Ratio: " + Sentiment.positive + "/" + Sentiment.countWordAL);
-
-
-    /*
-    for(String i : Sentiment.stopAL){
-      System.out.print(i +", ");
-    }
-    System.out.print("Total words : " + Sentiment.countStopAL);
-    */
-
+    System.out.println("Ratio: " + Sentiment.positive + "/" + Sentiment.negative);
 
     //EndCode
     System.out.format("\n\n\nCode deactivated...");
