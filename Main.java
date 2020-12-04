@@ -19,7 +19,7 @@ class Main {
     for (int i = 0; i < linkAL.size(); i++ ) {
       Document doc = Jsoup.connect(linkAL.get(i)).get();
 
-      
+
       //Set said 'text' from Document doc to String variable
       String uncleanText = doc.text();
       //Clean text
@@ -27,24 +27,18 @@ class Main {
       //Rate text pos and neg
       rawText.Rating();
       
-
       System.out.println(linkAL.get(i));
+      System.out.format("|\n|\n");
+      System.out.println("▼");
 
-      System.out.format("\n\n");
-
-      System.out.println("Positive Sentiment: " + rawText.getPositiveRate() + "/" + Sentiment.countWordAL);
-
-      System.out.println("Negative Sentiment: " + rawText.getNegativeRate() + "/" + Sentiment.countWordAL);
-
-      System.out.println("Ratio: " + Sentiment.positive + "/" + Sentiment.negative);
-      System.out.format("\n\n");
-
+      rawText.getRate();
       
-
+      System.out.format("\n\n--------------------------------------------\n");
 
 
 
     }
+    rawText.getTotalRate();
 
     
     

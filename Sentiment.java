@@ -8,7 +8,8 @@ import java.io.FileNotFoundException;
 //Lets client object find amount of positive and negative sentiment
 public class Sentiment {
   
-  static int countWordAL, countStopAL, positive, negative;
+  static int countWordAL, countStopAL, positive, negative, Totalpos, Totalneg;
+  static double AveragePos, AverageNeg;
   
   //New ArrayList => Reset
   static ArrayList<String> wordAL = new ArrayList();
@@ -57,7 +58,6 @@ public class Sentiment {
     // [CODE BELOW ADD ELEMENT TO ARRAYLIST INSERTED FROM STOP.TXT FILE] //
     //-------------------------------------------------------------------//
 
-    //initialize blank local string variable
     String stopText = "";
     
     //Try pulling file from stop.txt
@@ -169,15 +169,15 @@ public class Sentiment {
       negAL.add(neg.toLowerCase());
     }
 
-    //Declare local variable
-
+    //Declare variable
+    int ratePositive = 0;
+    int rateNegative = 0;
 
     //----- INCREMENTING POS AND NEG -------------------------------------------------------------//
     // [CODE BELOW RUNS THROUGH EVERY INSTANCE OF MATCHING ELEMENTS AND INCREMENT RELATED VALUES] //
     //--------------------------------------------------------------------------------------------//
 
-    int ratePositive = 0;
-    int rateNegative = 0;
+    
 
     //Increment Positive for every match in the array
     for (int x = wordAL.size()-1; x > 0; x--){
@@ -200,11 +200,16 @@ public class Sentiment {
     //Set variable for main use
     this.negative = rateNegative;
     this.positive = ratePositive;
+
+    negCount.add(rateNegative);
+    posCount.add(ratePositive);
+
     
   }
 
 
-  
+  //Remove all element from arraylist for repeated use
+  //Post clear() method: Clean out array wordAL, stopAL, posAL, and negAL
   public void clear(){
     for(int i = wordAL.size() - 1; i > 0; i--){
       wordAL.remove(i);
@@ -224,23 +229,80 @@ public class Sentiment {
   }
 
 
+  public void getRate() {
 
-  public int getPositiveRate() {
+    System.out.println("Positive Sentiment: " + positive + "/" + countWordAL);
 
+    System.out.println("Negative Sentiment: " + negative + "/" + countWordAL);
+
+    double posDou = positive;
+    double negDou = negative;
+
+    System.out.println("Ratio: " + getRatio(posDou, negDou) + "/" + getRatio(negDou, negDou));
+
+    getSummary(posDou, negDou);
     
-
-
-    return positive;
   }
 
+  public double getRatio(double top, double bot){
+    double fraction = top/bot;
+    return fraction;
+
+  }
+
+  
+  //Add all pos
+  public void getTotalRate(){
+    for(int i = 0; i < posCount.size(); i++){
+      Totalpos += posCount.get(i);
+    }
+    for(int i = 0; i < negCount.size(); i++){
+      Totalneg += negCount.get(i);
+    }
+    
+    AverageNeg = Totalneg/negCount.size();
+    AveragePos = Totalpos/posCount.size();
 
 
-  public int getNegativeRate() {
+    System.out.println("Average Positive Sentiment: " + AveragePos);
 
+    System.out.println("Average Negative Sentiment: " + AverageNeg);
 
+    System.out.println("Average Ratio: " + getRatio(AveragePos, AverageNeg) + "/" + getRatio(AverageNeg, AverageNeg));
 
+    getSummary(AveragePos, AverageNeg);
+  }
 
-    return negative;
+  //Provide a rating system for 
+  public void getSummary(double pos, double neg){
+
+    //Subtract the total ratio by one 
+    double result = (pos/neg) - 1.0;
+    if (result >= 4.0){
+      System.out.print("Overhelmingly Positive");
+    }
+    else if(result >= 3.0){
+      System.out.print("Very Positive");
+    }
+    else if(result >= 2.0){
+      System.out.print("Mostly Positive");
+    }
+    else if(result >= 1.0){
+      System.out.print("Mixed");
+    }
+    else if(result >= 0.0){
+      System.out.print("Negative");
+    }
+    else if(result >= 0.75){
+      System.out.print("Very Negative");
+    }
+    else if(result >= 0.5){
+      System.out.print("Overhelmingly Negative");
+    }
+    else{
+      System.out.print("HOLT CRAP HOW BAD IS THIS PRODUCT?!");
+    }
+
   }
 
 }
