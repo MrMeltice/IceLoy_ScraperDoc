@@ -2,19 +2,34 @@ import java.util.ArrayList;
 import java.io.IOException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import java.util.Scanner;
+import java.util.*;
+
 
 class Main {
   public static void main(String[] args)  throws IOException {
     //Start text
     System.out.format("Initializing code...\n\n\n");
-
+    //Making an arraylist for the websites
     ArrayList<String> linkAL = new ArrayList<String>();
-    linkAL.add("https://www.denofgeek.com/games/ps5-review/#:~:text=PlayStation%205%20Specs&text=Taken%20on%20its%20own%20merits,the%20console's%20SSD%20and%20RAM.");
-    linkAL.add("https://www.techradar.com/reviews/ps5");
-    linkAL.add("https://www.metacritic.com/feature/reviews-for-the-sony-playstation-5-console-hardware");
-    linkAL.add("https://www.dualshockers.com/ps5-pros-and-cons-launch-sony/");
+    //Scanner 
+    Scanner sc = new Scanner(System.in);
+
+    
+    System.out.println("How many link(s) would you like to parse? : ");
+
+    int numLinks = sc.nextInt();
+
+    for (int i = 1; i < numLinks + 1 ; i++){
+      Scanner a = new Scanner(System.in);
+      System.out.format("\nInput Link Number %d\n", i);
+      String link = a.nextLine();
+      linkAL.add(link);
+    }
 
     Sentiment rawText = new Sentiment();
+
+    //Checkpoint* Iteration 4 complete = parse multiple website and store values => Represent data
     
     for (int i = 0; i < linkAL.size(); i++ ) {
       Document doc = Jsoup.connect(linkAL.get(i)).get();

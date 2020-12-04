@@ -91,7 +91,7 @@ public class Sentiment {
     // [CODE BELOW COMPARES ARRAYS WORDAL AND STOPAL AND REMOVE STOP WORD FROM THE WEBSITE] //
     //--------------------------------------------------------------------------------------//
 
-    //Checkpoint* Iteration 3 complete = removed stop text from array => 
+    //Checkpoint* Iteration 3 complete = removed stop text from arraylist => parse multiple websites
     for (int b = wordAL.size() - 1; b > 0; b--){
       for(int c = 0; c < stopAL.size(); c++){
         if(wordAL.get(b).equals(stopAL.get(c))){
@@ -228,7 +228,7 @@ public class Sentiment {
     }
   }
 
-
+  //
   public void getRate() {
 
     System.out.println("Positive Sentiment: " + positive + "/" + countWordAL);
@@ -273,13 +273,16 @@ public class Sentiment {
     getSummary(AveragePos, AverageNeg);
   }
 
-  //Provide a rating system for 
+  //Provide a rating system for sentiment
+  //Post getSummary(double, double): prints 
   public void getSummary(double pos, double neg){
 
-    //Subtract the total ratio by one 
-    double result = (pos/neg) - 1.0;
+    //Finds range of sentiment
+    double result = (pos/neg) - (neg/neg);
+
+    //Rating System
     if (result >= 4.0){
-      System.out.print("Overhelmingly Positive");
+      System.out.print("Overwhelmingly Positive");
     }
     else if(result >= 3.0){
       System.out.print("Very Positive");
@@ -297,7 +300,7 @@ public class Sentiment {
       System.out.print("Very Negative");
     }
     else if(result >= 0.5){
-      System.out.print("Overhelmingly Negative");
+      System.out.print("Overwhelmingly Negative");
     }
     else{
       System.out.print("HOLT CRAP HOW BAD IS THIS PRODUCT?!");
