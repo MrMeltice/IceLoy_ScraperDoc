@@ -7,20 +7,26 @@ import java.io.FileNotFoundException;
 
 //Lets client object find amount of positive and negative sentiment
 public class Sentiment {
+  
   static int countWordAL, countStopAL, positive, negative;
-  public int ambiguous;
-  //New ArrayList word Array List
+  
+  //New ArrayList => Reset
   static ArrayList<String> wordAL = new ArrayList();
-  //New ArrayList stop word Array List
   static ArrayList<String> stopAL = new ArrayList();
-
   static ArrayList<String> posAL = new ArrayList();
   static ArrayList<String> negAL = new ArrayList();
+
+  //Count Arraylist => Stock 
+  static ArrayList<Integer> posCount = new ArrayList();
+  static ArrayList<Integer> negCount = new ArrayList();
+
 
   
   //public method removing stop words
   //Post removeStop method output: Clean text (Removed Blank Value, Num, Special Char, Stop-word) convert to array for comparison
   public void removeStop(String text){
+    clear();
+
 
     //[CODE BELOW REMOVE ALL SPECIAL&NUM CHAR and ADD ALL WORDS PULLED FROM WEBSITE TO ARRAYLIST]
 
@@ -87,7 +93,7 @@ public class Sentiment {
 
     //Checkpoint* Iteration 3 complete = removed stop text from array => 
     for (int b = wordAL.size() - 1; b > 0; b--){
-      for(int c = 0; c < stopAL.size() - 1; c++){
+      for(int c = 0; c < stopAL.size(); c++){
         if(wordAL.get(b).equals(stopAL.get(c))){
           wordAL.remove(b);
         }
@@ -164,16 +170,18 @@ public class Sentiment {
     }
 
     //Declare local variable
-    int ratePositive = 0;
-    int rateNegative = 0;
+
 
     //----- INCREMENTING POS AND NEG -------------------------------------------------------------//
     // [CODE BELOW RUNS THROUGH EVERY INSTANCE OF MATCHING ELEMENTS AND INCREMENT RELATED VALUES] //
     //--------------------------------------------------------------------------------------------//
 
+    int ratePositive = 0;
+    int rateNegative = 0;
+
     //Increment Positive for every match in the array
     for (int x = wordAL.size()-1; x > 0; x--){
-      for(int y = 0; y < posAL.size() - 1; y++){
+      for(int y = 0; y < posAL.size(); y++){
         if(wordAL.get(x).equals(posAL.get(y))){
           ratePositive++;
         }
@@ -182,7 +190,7 @@ public class Sentiment {
 
     //Increment Negative for every match in the array
     for (int x = wordAL.size()-1; x > 0; x--){
-      for(int y = 0; y < posAL.size() - 1; y++){
+      for(int y = 0; y < posAL.size(); y++){
         if(wordAL.get(x).equals(negAL.get(y))){
           rateNegative++;
         }
@@ -192,7 +200,27 @@ public class Sentiment {
     //Set variable for main use
     this.negative = rateNegative;
     this.positive = ratePositive;
+    
+  }
 
+
+  
+  public void clear(){
+    for(int i = wordAL.size() - 1; i > 0; i--){
+      wordAL.remove(i);
+    }
+
+    for(int i = stopAL.size() - 1; i > 0; i--){
+      stopAL.remove(i);
+    }
+  
+    for(int i = posAL.size() - 1; i > 0; i--){
+      posAL.remove(i);
+    }
+
+    for(int i = negAL.size() - 1; i > 0; i--){
+      negAL.remove(i);
+    }
   }
 
 
